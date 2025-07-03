@@ -1,0 +1,17 @@
+server:
+  port: 8082
+
+spring:
+  webflux:
+    base-path: /api/v1/sample/
+  r2dbc:
+    url: r2dbc:mysql://localhost:3306/login
+    username: root
+    password: R@vi123
+logging:
+  level:
+    root: INFO
+    org.springframework: DEBUG
+jwt:
+  secret-key: mysecretkey123456
+  expiration-time: 86400000
