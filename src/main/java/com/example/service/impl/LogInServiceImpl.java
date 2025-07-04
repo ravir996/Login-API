@@ -14,45 +14,57 @@ import com.example.security.jwt.JwtUtil;
 import com.example.service.ILogInService;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import reactor.core.publisher.Mono;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class LogInServiceImpl implements ILogInService {
 
-	public final IUserRepo userRepo;
+    private final IUserRepo userRepo;
+    
+    private final JwtUtil jwtUtil;
+    
+    private final PasswordEncoder passwordEncoder;
+    
+    private final ISecretRepo secretRepo;
 
-	public final JwtUtil jwtUtil;
+    @Override
+    public Mono<SecretVO> login(LoginVO vo) {
+        log.info("Login attempt for username: {}", vo.getUsername());
 
-	public final PasswordEncoder passwordEncoder;
+        return userRepo.findByUserNameAndStatus(vo.getUsername(), Status.ACTIVE.toString())
+            .switchIfEmpty(Mono.defer(() -> {
+                log.warn("Login failed: User not found or inactive for username: {}", vo.getUsername());
+                return Mono.error(new BadDataException("User not found."));
+            }))
+            .flatMap(user -> {
+                if (passwordEncoder.matches(vo.getPassword(), user.getPassword())) {
+                    String token = jwtUtil.generateToken(vo.getUsername());
+                    log.info("Password matched for username: {}. Token generated.", vo.getUsername());
+                    return secretRepo.save(toEntity(token))
+                        .map(this::toVO)
+                        .doOnSuccess(voRes -> log.info("Login successful for username: {}", vo.getUsername()));
+                } else {
+                    log.warn("Login failed: Incorrect password for username: {}", vo.getUsername());
+                    return Mono.error(new BadDataException("Password does not match."));
+                }
+            })
+            .doOnError(e -> log.error("Login error for username: {}", vo.getUsername(), e));
+    }
 
-	public final ISecretRepo secretRepo;
+    private Secret toEntity(String token) {
+        Secret secret = new Secret();
+        secret.setToken(token);
+        return secret;
+    }
 
-	@Override
-	public Mono<SecretVO> login(LoginVO vo) {
-		return userRepo.findByUserNameAndStatus(vo.getUsername(), Status.ACTIVE.toString())
-				.switchIfEmpty(Mono.error(new BadDataException("User not found or inactive."))).flatMap(user -> {
-					if (passwordEncoder.matches(vo.getPassword(), user.getPassword())) {
-						String token = jwtUtil.generateToken(vo.getUsername());
-						return secretRepo.save(toEntity(token)).map(this::toVO);
-					} else {
-						return Mono.error(new BadDataException("Password does not match."));
-					}
-				});
-	}
-
-	private Secret toEntity(String token) {
-		Secret secret = new Secret();
-		secret.setToken(token);
-		return secret;
-	}
-
-	private SecretVO toVO(Secret e) {
-		SecretVO vo = new SecretVO();
-		vo.setId(e.getId());
-		vo.setToken(e.getToken());
-		vo.setMessage("Login Successfully");
-		return vo;
-	}
-
+    private SecretVO toVO(Secret e) {
+        SecretVO vo = new SecretVO();
+        vo.setId(e.getId());
+        vo.setToken(e.getToken());
+        vo.setMessage("Login Successfully");
+        return vo;
+    }
 }

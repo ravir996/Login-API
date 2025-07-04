@@ -4,6 +4,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -22,14 +23,18 @@ public class SignupResource {
 	
 	public final ISignUpService signUpService;
 	
-	@PostMapping
-	public Mono<ResponseEntity<UserVO>> create(@RequestBody final UserVO vo) {
-		return signUpService.create(vo).map(v -> new ResponseEntity<>(v, HttpStatus.OK));
+	@PostMapping("/init")
+	public Mono<ResponseEntity<UserVO>> init(@RequestBody final UserVO vo) {
+		return signUpService.init(vo).map(v -> new ResponseEntity<>(v, HttpStatus.OK));
 	}
 	
-	 @GetMapping("/error")
-	    public Mono<String> testError() {
-	        return Mono.error(new BadDataException("Test error from handler"));
-	    }
-
+	@PostMapping("/confirm")
+	public Mono<ResponseEntity<UserVO>> confirm(@RequestBody final UserVO vo) {
+		return signUpService.confirm(vo).map(v -> new ResponseEntity<>(v, HttpStatus.OK));
+	}
+	
+	@PutMapping("/reSendOtp")
+	public Mono<ResponseEntity<UserVO>> reSend(@RequestBody final UserVO vo) {
+		return signUpService.reSend(vo).map(v -> new ResponseEntity<>(v, HttpStatus.OK));
+	}
 }

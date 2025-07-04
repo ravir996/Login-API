@@ -15,6 +15,12 @@ public interface IUserRepo extends ReactiveCrudRepository<User, Long> {
 	public Mono<User> findByUserNameAndStatus(String name, String status);
 	
 	public Mono<User> findByUserNameOrEmailIdOrMobileNoAndStatus(String name, String emailId, String mobileNo, String status);
+	
+	public Mono<User> findByEmailIdAndStageAndStatus(String name, String stage, String status);
+	
+	public Mono<User> findByIdAndStageAndStatus(Long id, String stage, String status);
+
+	
 
 
 }

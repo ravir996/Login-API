@@ -1,5 +1,7 @@
 package com.example.entity;
 
+import java.time.LocalDateTime;
+
 import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.Column;
 import org.springframework.data.relational.core.mapping.Table;
@@ -30,6 +32,15 @@ public class User {
 	
 	@Column("status")
 	private String status;
+	
+	@Column("stage")
+	private String stage;
+	
+	@Column("otp")
+	private String otp;
+
+	@Column("expiry_time")
+	private LocalDateTime expiryTime;
 	
 	
 

@@ -1,11 +1,8 @@
 package com.example.exception;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
-
 import lombok.Data;
 
 @Data
-@JsonInclude(JsonInclude.Include.NON_NULL)
 public class Freak {
 
 	private String message;
@@ -14,5 +11,12 @@ public class Freak {
 		this.message = message;
 	}
 
-	
+	public String getMessage() {
+		return message;
+	}
+
+	public void setMessage(String message) {
+		this.message = message;
+	}
+
 }

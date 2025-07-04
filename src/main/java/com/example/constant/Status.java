@@ -2,11 +2,13 @@ package com.example.constant;
 
 public enum Status {
     
-    ACTIVE("A"),
-    INACTIVE("I"),
+	ACTIVE("A"),
+    INACTIVE("IA"),
     DEACTIVATED("D"),
     PENDING("P"),
-    PERMANENTLY_DELETED("X");
+    PERMANENTLY_DELETED("X"),
+    INITIATED("I"),
+    CONFIRM("C");
 
     private final String code;
 

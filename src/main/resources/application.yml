@@ -3,15 +3,48 @@ server:
 
 spring:
   webflux:
-    base-path: /api/v1/sample/
+    base-path: /api/v1/sample
   r2dbc:
     url: r2dbc:mysql://localhost:3306/login
     username: root
     password: R@vi123
+    pool:
+      enabled: true
+      initial-size: 5
+      max-size: 20
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: ravir.raj996@gmail.com
+    password: lmkovvqrkvqcnsdr
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+            required: true
+
+cors:
+  allowedOrigins:
+    - http://localhost:4200
+    - https://yourdomain.com
+  allowedMethods:
+    - GET
+    - POST
+    - PUT
+    - DELETE
+    - OPTIONS
+    - PATCH
+  allowedHeaders:
+    - "*"
+  allowCredentials: true
+
 logging:
   level:
     root: INFO
     org.springframework: DEBUG
+
 jwt:
   secret-key: mysecretkey123456
-  expiration-time: 86400000
+  expiration-time: 86400000  # 24 hours in milliseconds
