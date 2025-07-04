@@ -34,7 +34,7 @@ public class SecurityConfig {
 	        .csrf().disable()
 	        .securityContextRepository(NoOpServerSecurityContextRepository.getInstance())
 	        .authorizeExchange()
-	        .pathMatchers("/login", "/signup/init", "/signup/confirm", "/signup/reSendOtp").permitAll()
+	        .pathMatchers("/login", "/login/forgetpassword-init","/login/forgetpassword-confrm" , "/signup/init", "/signup/confirm", "/signup/reSendOtp").permitAll()
 	        .anyExchange().authenticated()
 	        .and()
 	        .addFilterAt(jwtAuthenticationFilter(), SecurityWebFiltersOrder.AUTHENTICATION)

@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.domain.vo.LoginVO;
 import com.example.domain.vo.SecretVO;
+import com.example.domain.vo.UserVO;
 import com.example.service.ILogInService;
 
 import lombok.RequiredArgsConstructor;
@@ -39,6 +40,23 @@ public class LoginResource {
 	private Mono<ResponseEntity<SecretVO>> unauthorized() {
 	    return Mono.just(ResponseEntity.status(HttpStatus.UNAUTHORIZED).build());
 	}
+	
+	@PostMapping("/forgetpassword-init")
+	public Mono<ResponseEntity<UserVO>> forgetPasswordInit(@RequestBody UserVO vo) {
+	     return logInService.forgetPasswordInit(vo).map(v -> new ResponseEntity<>(v, HttpStatus.OK));
+	}
+	
+	@PostMapping("/forgetpassword-confrm")
+	public Mono<ResponseEntity<UserVO>> forgetPasswordConfrm(@RequestBody UserVO vo) {
+	     return logInService.forgetPasswordConfrm(vo).map(v -> new ResponseEntity<>(v, HttpStatus.OK));
+	}
+	
+	@PostMapping("/resetpassword")
+	public Mono<ResponseEntity<UserVO>> resetPassword(@RequestBody UserVO vo) {
+	    return logInService.resetPassword(vo).map(v -> new ResponseEntity<>(v, HttpStatus.OK));
+	}
+
+
 
 
 }

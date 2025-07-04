@@ -1,6 +1,6 @@
 package com.example.entity;
 
-import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.Column;
@@ -40,7 +40,7 @@ public class User {
 	private String otp;
 
 	@Column("expiry_time")
-	private LocalDateTime expiryTime;
+	private LocalTime expiryTime;
 	
 	
 

@@ -1,6 +1,6 @@
 package com.example.service.impl;
 
-import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -42,7 +42,7 @@ public class SignUpServiceImpl implements ISignUpService {
 				}
 
 				String otp = generateOtp();
-				LocalDateTime expiryTime = generateOtpExpiryTime();
+				LocalTime expiryTime = generateOtpExpiryTime();
 				vo.setOtp(otp);
 				vo.setExpiryTime(expiryTime);
 				vo.setPassword(passwordEncoder.encode(vo.getPassword()));
@@ -76,8 +76,8 @@ public class SignUpServiceImpl implements ISignUpService {
 		return String.valueOf(otp);
 	}
 
-	private LocalDateTime generateOtpExpiryTime() {
-		return LocalDateTime.now().plusMinutes(1);
+	private LocalTime generateOtpExpiryTime() {
+		return LocalTime.now().plusMinutes(1);
 	}
 
 	private User toEntity(UserVO vo, IUserMapper mapper) {
@@ -98,7 +98,7 @@ public class SignUpServiceImpl implements ISignUpService {
 	public Mono<UserVO> confirm(UserVO vo) {
 		log.info("Confirming OTP for email: {}", vo.getEmailId());
 		return userRepo
-				.findByEmailIdAndStageAndStatus(vo.getEmailId(), Status.INITIATED.toString(), Status.PENDING.toString())
+				.findByUserNameOrEmailIdAndStageAndStatus(vo.getUserName(), vo.getEmailId(), Status.INITIATED.toString(), Status.PENDING.toString())
 				.switchIfEmpty(Mono.error(new BadDataException("User not found.")))
 				.flatMap(existing -> {
 					if (existing.getOtp() == null || existing.getExpiryTime() == null) {
@@ -106,17 +106,18 @@ public class SignUpServiceImpl implements ISignUpService {
 						return Mono.error(new BadDataException("OTP not generated."));
 					}
 
-					if (existing.getExpiryTime().isBefore(LocalDateTime.now())) {
-						log.warn("Expired OTP for user ID: {}", existing.getId());
-						return Mono.error(new BadDataException("OTP has expired."));
+					if (existing.getExpiryTime().isBefore(LocalTime.now())) {
+					    log.warn("Expired OTP (by time only) for user ID: {}", existing.getId());
+					    return Mono.error(new BadDataException("OTP has expired."));
 					}
+
 
 					if (!existing.getOtp().equals(vo.getOtp())) {
 						log.warn("Invalid OTP provided for user ID: {}", existing.getId());
 						return Mono.error(new BadDataException("Invalid OTP."));
 					}
 
-					User updated = toAlt(existing, vo, mapper);
+					User updated = toAlt(existing, mapper);
 					log.info("User confirmed. Updating status to ACTIVE for ID: {}", updated.getId());
 					return userRepo.save(updated).map(u -> {
 						UserVO v = mapper.toVo(u);
@@ -128,7 +129,7 @@ public class SignUpServiceImpl implements ISignUpService {
 				});
 	}
 
-	private User toAlt(User existing, UserVO vo, IUserMapper mapper) {
+	private User toAlt(User existing, IUserMapper mapper) {
 		existing.setStatus(Status.ACTIVE.toString());
 		existing.setStage(Status.CONFIRM.toString());
 		return existing;
@@ -142,7 +143,7 @@ public class SignUpServiceImpl implements ISignUpService {
 	        .switchIfEmpty(Mono.error(new BadDataException("User not found.")))
 	        .flatMap(existing -> {
 	            String otp = generateOtp();
-	            LocalDateTime expiryTime = generateOtpExpiryTime();
+	            LocalTime expiryTime = generateOtpExpiryTime();
 
 	            existing.setOtp(otp);
 	            existing.setExpiryTime(expiryTime);

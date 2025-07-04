@@ -1,6 +1,6 @@
 package com.example.domain.vo;
 
-import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -21,7 +21,7 @@ public class UserVO {
 	private String confrmPassword;
 	private String otp;
 	@JsonIgnore
-	private LocalDateTime expiryTime;
+	private LocalTime expiryTime;
 	private String message;
 
 }
