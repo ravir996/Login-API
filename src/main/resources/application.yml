@@ -1,11 +1,11 @@
 server:
-  port: 8082
+  port: 8095
 
 spring:
   webflux:
     base-path: /api/v1/sample
   r2dbc:
-    url: r2dbc:mysql://localhost:3306/login
+    url: r2dbc:mysql://localhost:3307/login
     username: root
     password: R@vi123
     pool:
@@ -15,8 +15,8 @@ spring:
   mail:
     host: smtp.gmail.com
     port: 587
-    username: ${MAIL_USERNAME}   
-    password: ${MAIL_PASSWORD}
+    username: ${MY_MAIL_USERNAME}   
+    password: ${MY_MAIL_PASSWORD}
     properties:
       mail:
         smtp:

@@ -1,0 +1,551 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        background: #f3f4f6;
+        font-family: "Poppins", sans-serif;
+        padding: 40px 15px;
+        color: #222;
+      }
+
+      .mail-wrapper {
+        margin: auto;
+        background: #ffffff;
+        border-radius: 18px;
+        overflow: hidden;
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+      }
+
+      .mail-topbar {
+        background: #ffffff;
+        padding: 28px 34px 18px;
+        border-bottom: 1px solid #ececec;
+      }
+
+      .mail-title {
+        font-size: 34px;
+        font-weight: 600;
+        color: #222;
+        margin-bottom: 6px;
+      }
+
+      .mail-sub {
+        font-size: 14px;
+        color: #7b7b7b;
+      }
+
+      .mail-content {
+        padding: 30px;
+      }
+
+      .brand-box {
+        width: 100%;
+        background: #f2f2f2;
+        border-radius: 5px;
+        border: 1px solid #eeeeee;
+        padding: 12px 18px;
+        margin-bottom: 25px;
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        gap: 12px;
+        min-height: 73px;
+      }
+
+      .brand-box table {
+        width: auto;
+        border-collapse: collapse;
+        margin: 0;
+      }
+
+      .brand-box td {
+        vertical-align: middle;
+      }
+
+      .logo-container {
+        width: 68px;
+        height: 31px;
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+      }
+
+      .gateway-logo {
+        display: block;
+        width: 68px;
+        max-width: 160px;
+        height: 41.31px;
+        max-height: 34px;
+        object-fit: contain;
+      }
+
+      .brand-text {
+        font-size: 17px;
+        font-weight: 600;
+        color: #111;
+        text-align: left;
+        line-height: 1.4;
+        padding-left: 12px;
+      }
+
+      .mail-text,
+      .copy-btn,
+      .code-box,
+      .support-text,
+      .thankpayment,
+      .regards {
+        margin-left: 18px;
+      }
+
+      .logo-circle {
+        width: 58px;
+        height: 58px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, #76d600, #52b000);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #fff;
+        font-size: 28px;
+        font-weight: 700;
+        flex-shrink: 0;
+      }
+
+      .mail-text {
+        font-size: 14px;
+        width: 100%;
+        line-height: 20px;
+        color: #333;
+        margin-bottom: 15px;
+        word-wrap: break-word;
+      }
+
+      .user-name {
+        font-weight: 500;
+      }
+
+      .code-wrapper {
+        margin: 35px 0 30px;
+      }
+
+      .code-box {
+        display: block;
+        align-items: flex-start;
+        flex-direction: column;
+        justify-content: center;
+        width: 100%;
+        max-width: 320px;
+        min-width: 0;
+        padding: 15px 25px;
+        line-height: 25px;
+        background: #fff;
+        border: none;
+        border-radius: 3px;
+        margin-bottom: 30px;
+        background-image:
+          repeating-linear-gradient(90deg, #2f2f2f 0 8px, transparent 8px 14px),
+          repeating-linear-gradient(
+            180deg,
+            #2f2f2f 0 8px,
+            transparent 8px 14px
+          ),
+          repeating-linear-gradient(90deg, #2f2f2f 0 8px, transparent 8px 14px),
+          repeating-linear-gradient(180deg, #2f2f2f 0 8px, transparent 8px 14px);
+
+        background-position: top, right, bottom, left;
+        background-size:
+          100% 2px,
+          2px 100%,
+          100% 2px,
+          2px 100%;
+
+        background-repeat: no-repeat;
+        box-sizing: border-box;
+      }
+
+      .btn-wrapper {
+        margin: 30px 0;
+      }
+
+      .copy-btn {
+        display: inline-block;
+        background: #69ac3c;
+        color: #ffffff !important;
+        text-decoration: none;
+        padding: 12px 32px;
+        border-radius: 30px;
+        font-size: 14px;
+        font-weight: 600;
+      }
+
+      .support-text {
+        font-size: 13px;
+        line-height: 25px;
+        max-width: 700px;
+        width: 100%;
+        margin-top: 25px;
+        word-wrap: break-word;
+      }
+
+      .support-text a {
+        color: #65c400;
+        text-decoration: none;
+      }
+
+      .regards {
+        margin-top: 60px;
+        font-size: 13px;
+        line-height: 25px;
+      }
+
+      .mail-footer {
+        padding: 20px;
+        border-top: 1px solid #999999;
+        text-align: center;
+        font-size: 12px;
+        color: #7d7d7d;
+        background: #fff;
+      }
+
+      .gmail-header {
+        background: #ffffff;
+        padding: 20px 25px;
+        border-bottom: 1px solid #e5e5e5;
+        font-family: Arial, sans-serif;
+      }
+
+      .subject-row {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin-bottom: 18px;
+      }
+
+      .subject-row h1 {
+        margin: 0;
+        font-size: 20px;
+        font-weight: 400;
+        color: #202124;
+      }
+
+      .label {
+        background: #f1f3f4;
+        color: #5f6368;
+        font-size: 12px;
+        padding: 3px 8px;
+        border-radius: 4px;
+      }
+
+      .sender-row {
+        display: flex;
+        align-items: flex-start;
+      }
+
+      .avatar {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background: #d2e3fc;
+        color: #4285f4;
+        font-size: 20px;
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-right: 12px;
+      }
+
+      .sender-details {
+        flex: 1;
+      }
+
+      .sender-top {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 3px;
+      }
+
+      .email {
+        font-size: 14px;
+        font-weight: 600;
+        color: #202124;
+      }
+
+      .date {
+        font-size: 12px;
+        color: #5f6368;
+      }
+
+      .receiver-list {
+        font-size: 13px;
+        color: #5f6368;
+      }
+
+      .link-send {
+        color: #1155cc;
+        text-decoration: underline;
+        word-break: break-all;
+        display: block;
+        margin-top: 20px;
+        margin-bottom: 25px;
+      }
+
+      .user-detail {
+        font-size: 14px;
+        color: #000;
+        word-wrap: break-word;
+      }
+
+      .user-value {
+        font-size: 14px;
+        color: #6bc200;
+      }
+
+      .thankpayment {
+        margin-top: 25px;
+        font-size: 13px;
+      }
+
+      @media (max-width: 1024px) {
+        body {
+          padding: 30px 15px;
+        }
+
+        .mail-wrapper {
+          max-width: 100%;
+        }
+
+        .mail-text,
+        .support-text,
+        .link-send {
+          max-width: 100%;
+        }
+      }
+
+      @media (max-width: 768px) {
+        body {
+          padding: 15px;
+        }
+
+        .mail-title {
+          font-size: 24px;
+          line-height: 36px;
+        }
+
+        .brand-box {
+          padding: 12px 14px;
+          gap: 10px;
+          min-height: 55px;
+        }
+
+        .logo-container {
+          width: 40px;
+          height: 36px;
+          min-width: 40px;
+          min-height: 36px;
+        }
+
+        .brand-text {
+          font-size: 14px !important;
+          white-space: nowrap;
+          padding-left: 32px;
+        }
+
+        .logo-circle {
+          width: 48px;
+          height: 48px;
+          font-size: 22px;
+        }
+
+        .mail-text {
+          font-size: 14px;
+          line-height: 24px;
+        }
+
+        .code-box {
+          font-size: 16px;
+          height: auto;
+          padding: 15px 18px;
+        }
+
+        .copy-btn {
+          text-align: center;
+          padding: 12px 20px;
+        }
+
+        .support-text {
+          font-size: 13px;
+        }
+
+        .regards {
+          font-size: 14px;
+          margin-top: 40px;
+        }
+
+        .link-send {
+          font-size: 12px;
+        }
+      }
+
+      @media only screen and (max-width: 480px) {
+        .brand-box {
+          padding: 10px;
+        }
+
+        .logo-container {
+          width: 35px;
+          height: 32px;
+          min-width: 35px;
+          min-height: 32px;
+        }
+
+        .brand-text {
+          font-size: 14px !important;
+          white-space: nowrap;
+        }
+
+        .copy-btn {
+          text-align: center;
+          white-space: nowrap;
+        }
+      }
+
+      @media (max-width: 400px) {
+        .brand-box {
+          flex-direction: row;
+          align-items: center;
+        }
+
+        .logo-container {
+          width: 35px;
+          height: 32px;
+          min-width: 35px;
+          min-height: 32px;
+        }
+
+        .brand-text {
+          font-size: 14px !important;
+          white-space: nowrap;
+        }
+
+        .copy-btn {
+          text-align: center;
+          white-space: nowrap;
+        }
+
+        .mail-title {
+          font-size: 20px;
+          line-height: 28px;
+        }
+      }
+
+      @media only screen and (max-width: 360px) {
+        .logo-container {
+          width: 30px;
+          height: 27px;
+          min-width: 30px;
+          min-height: 27px;
+        }
+
+        .brand-text {
+          font-size: 13px !important;
+          padding-left: 33px;
+        }
+
+        .copy-btn {
+          text-align: center;
+          white-space: nowrap;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="mail-wrapper">
+      <div class="mail-content">
+        <div class="brand-box">
+          <table role="presentation" cellpadding="0" cellspacing="0" border="0">
+            <tr>
+              <td align="left">
+                <div class="logo-container">
+                  <img
+                    src="https://institution-stage.gatekey.money/institution/institutions/{{institutionId}}/logo.png"
+                    width="75%"
+                    alt="GateKey Logo"
+                    class="gateway-logo"
+                  />
+                </div>
+              </td>
+              <td align="left">
+                <div class="brand-text">Activate Your Account</div>
+              </td>
+            </tr>
+          </table>
+        </div>
+
+        <div class="mail-text">
+          Dear <span class="user-name">{{user_name}}</span>,
+        </div>
+
+        <div class="mail-text">
+          <p>
+            Welcome to GateKey! To get started, Please activate your account by
+            clicking the link below,
+          </p>
+        </div>
+
+        <div class="btn-wrapper">
+          <div class="code-box" id="copyCode">
+            <p class="user-detail">
+              Institution Code : <span class="user-value"> {{User_id}}</span>
+            </p>
+            <p class="user-detail">
+              Username :<span class="user-value"> {{User_name}}</span>
+            </p>
+          </div>
+
+          <br />
+
+          <a
+            href="{{custom_link}}/institution/activateMethod.action?actId={{actId}}&id={{id}}"
+            class="copy-btn"
+          >
+            Click here to activate your account
+          </a>
+        </div>
+
+        <div class="support-text">
+          If you have any questions or need assistance, please contact our
+          support team at
+          <a href="#">support@gatekey.money</a>.
+        </div>
+
+        <div class="thankpayment">
+          Thank you for choosing GateKey Payment Gateway. We look forward to
+          serving you with your payment processing needs!
+        </div>
+
+        <div class="regards">
+          Best regards,<br />
+          GateKey Payment Gateway
+        </div>
+      </div>
+
+      <div class="mail-footer">
+        Copyright &copy; 2026 GateKey. All rights reserved.
+      </div>
+    </div>
+  </body>
+</html>

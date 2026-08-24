@@ -91,6 +91,7 @@ public class SignUpServiceImpl implements ISignUpService {
 		UserVO vo = mapper.toVo(savedUser);
 		vo.setPassword(null);
 		vo.setMessage(msg);
+		vo.setOtp(null);
 		return vo;
 	}
 
